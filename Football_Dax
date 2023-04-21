@@ -1,0 +1,39 @@
+# Football Analysis
+
+Q.1 Which Team has won maximum no of times Football Trophy.
+
+Ans:
+Max_win_team= 
+CALCULATE(SELECTEDVALUE(Tournament[winner]),
+TopN(1,
+SUMMARIZE(Tournament,Tournament[winner], "count win",COunt(Tournament[winner])),[count win],
+))
+
+
+Q.2 Which team won the maximum no of times Football Trophy and hosted the event.
+
+Ans:
+Max_host_win = 
+CONCATENATEX(
+topN(1,
+SUMMARIZE(Tournament,Tournament[host_country],"Host won",SUM(Tournament[host_won])),[Host won]),Tournament[host_country],",",Tournament[host_country])
+
+Q.3 Calculate maximum gap in Football Tournament.
+Ans:
+max-gap_year= 
+MAXX(Tournament,Tournament[Gap year])
+
+ Q.4 which team appeared most times in footbal final match.
+Ans:
+Team_app_max_in_final = 
+CONCATENATEX(
+TopN(1,
+SUMMARIZE(
+FILTER(Standings,Standings[position]=2),Standings[team_id],Teams[team_name],"count",COUNT(Standings[team_id])),[count]),Teams[team_name],",",[count])
+
+Q.5 which player played maximum no of Tournament.
+Ans:
+Player_max_tour= 
+CONCATENATEX(
+TOPN(1,Player,Player[count_tournaments]),
+Player[given_name] &" " &Player[family_name],",",Player[given_name] &" " &Player[family_name])
